@@ -1,0 +1,17 @@
+<div class="row my-5">
+  <div class="col-4">
+    <app-user-settings></app-user-settings>
+  </div>
+  <div class="col-7">
+    <div class="row my-2" *ngFor="let user of usersList">
+      <div class="col-3">{{user.surname|titlecase}} {{[user.name,user.secName]|initials|uppercase}}</div>
+      <div class="col-4">{{user.position|lowercase}}</div>
+      <div class="col-1 px-1 mr-4">
+        <button type="submit" class="btn btn-primary btn-sm">Просмотр</button>
+      </div>
+      <div class="col-1 px-1">
+        <button type="reset" class="btn btn-danger btn-sm" (click)="onDelete(user.key)">Удалить</button>
+      </div>
+    </div>
+  </div>
+</div>
