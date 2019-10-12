@@ -11,6 +11,7 @@ import { StreamsService } from '../services/streams.service';
 export class ListComponent implements OnInit {
   usersList: IUser[];
   data: IUser[];
+  divisions: string[] = [];
 
   constructor(
     private fbs: FirebaseServiceService,
@@ -18,6 +19,12 @@ export class ListComponent implements OnInit {
   ) {
     fbs.getData().subscribe(obs => {
       this.usersList = obs;
+      for (let user of this.usersList) {
+        if (!this.divisions.includes(user.division)) {
+          this.divisions.push(user.division);
+        }
+      }
+      this.divisions.sort();
       this.data = obs;
     });
     str.searchStream$.subscribe(observer => {
@@ -36,7 +43,7 @@ export class ListComponent implements OnInit {
 
   searchSurname(request: string) {
     this.data = this.usersList.filter(item =>
-      item.surname.includes(request.trim())
+      item.surname.toLowerCase().includes(request.trim().toLowerCase())
     );
   }
 
@@ -45,7 +52,7 @@ export class ListComponent implements OnInit {
       request = '';
     }
     this.data = this.usersList.filter(item =>
-      item.division.includes(request.trim())
+      item.division.toLowerCase().includes(request.trim().toLowerCase())
     );
   }
 
@@ -54,9 +61,15 @@ export class ListComponent implements OnInit {
       request = '';
     }
     this.data = this.usersList.filter(item =>
-      item.position.includes(request.trim())
+      item.position.toLowerCase().includes(request.trim().toLowerCase())
     );
   }
+
+  // filterData() {
+  //   for (let user of this.usersList){
+  //     if ()
+  //   }
+  // }
 
   ngOnInit() {}
 }
