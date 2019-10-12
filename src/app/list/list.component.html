@@ -1,13 +1,43 @@
-<div class="row my-5">
+<div class="row my-1">
   <div class="col-4">
     <app-user-settings></app-user-settings>
   </div>
-  <div class="col-7">
-    <div class="row my-2" *ngFor="let user of usersList">
+  <div class="col-7 my-5">
+    <div class="row">
+      <div class="col-12">
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+            (input)="searchSurname($event.target.value)">
+
+          <div class="form-group">
+            <select class="form-control my-3" id="position" required name="position"
+              (input)="searchPosition($event.target.value)">
+              <option>Должность</option>
+              <option>Начальник отдела</option>
+              <option>Заместитель начальника отдела</option>
+              <option>Секретарь</option>
+              <option>Бухгалтер</option>
+              <option>Стажер</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <select class="form-control my-3" id="division" required name="division"
+              (input)="searchDivision($event.target.value)">
+              <option>Отделение</option>
+              <option>Отделение 1</option>
+              <option>Отделение 2</option>
+              <option>Отделение 3</option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row my-2" *ngFor="let user of data">
       <div class="col-3">{{user.surname|titlecase}} {{[user.name,user.secName]|initials|uppercase}}</div>
       <div class="col-4">{{user.position|lowercase}}</div>
       <div class="col-1 px-1 mr-4">
-        <button type="submit" class="btn btn-primary btn-sm">Просмотр</button>
+        <button type="submit" class="btn btn-primary btn-sm" (click)="onUpdate(user)">Просмотр</button>
       </div>
       <div class="col-1 px-1">
         <button type="reset" class="btn btn-danger btn-sm" (click)="onDelete(user.key)">Удалить</button>
