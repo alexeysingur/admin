@@ -65,11 +65,5 @@ export class ListComponent implements OnInit {
     );
   }
 
-  // filterData() {
-  //   for (let user of this.usersList){
-  //     if ()
-  //   }
-  // }
-
   ngOnInit() {}
 }
