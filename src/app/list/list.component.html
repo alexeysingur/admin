@@ -33,6 +33,7 @@
         </form>
       </div>
     </div>
+
     <div class="row my-2" *ngFor="let div of divisions">
       <div class="col-12">
         <div class="row">
@@ -43,6 +44,7 @@
             <div class="row my-1" *ngIf="div===user.division">
               <div class="col-3">{{user.surname|titlecase}} {{[user.name,user.secName]|initials|uppercase}}</div>
               <div class="col-4">{{user.position|lowercase}}</div>
+              <img [src]="user.photo" alt="" *ngIf="user.photo">
               <div class="col-1 px-1 mr-4">
                 <button type="submit" class="btn btn-primary btn-sm" (click)="onUpdate(user)">Просмотр</button>
               </div>

@@ -32,6 +32,17 @@
       </div>
 
       <div class="form-group">
+        <label for="photo">Фото</label>
+        <input type="file" class="form-control" id="photo" required placeholder=""
+          name="photo" (input)="onPushPhoto($event)">
+      </div>
+
+      <div class="form-group" *ngIf="user.photo">
+        <small>Добавленное фото:</small>
+        <img [src]="user.photo" alt="">
+      </div>
+
+      <div class="form-group">
         <label for="position">Должность</label>
         <select class="form-control my-3" id="position" required name="position" [(ngModel)]="user.position">
           <option>Начальник отдела</option>
@@ -49,6 +60,34 @@
           <option>Отделение 2</option>
           <option>Отделение 3</option>
         </select>
+      </div>
+
+      <div class="form-group">
+        <h5>Доступы</h5>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="createDepos" name="createDepos" [checked]="user.accesses.createDepos" (input)="user.accesses.createDepos=!user.accesses.createDepos">
+          <label class="form-check-label" for="createDepos">
+            Создание депозита
+          </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="closeDepose" name="closeDepose" [checked]="user.accesses.closeDepose" (input)="user.accesses.closeDepose=!user.accesses.closeDepose">
+            <label class="form-check-label" for="closeDepose">
+              Закрытие депозита
+            </label>
+          </div>
+          <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="approveCred"  name="approveCred" [checked]="user.accesses.approveCred" (input)="user.accesses.approveCred=!user.accesses.approveCred">
+              <label class="form-check-label" for="approveCred">
+                Одобрение кредита
+              </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="approveCount"  name="approveCount" [checked]="user.accesses.approveCount" (input)="user.accesses.approveCount=!user.accesses.approveCount"> 
+                <label class="form-check-label" for="approveCount">
+                  Одобрение открытие счета
+                </label>
+              </div>
       </div>
 
       <button type="submit" class="btn btn-primary mb-2 mx-3" (click)="onSubmit()">Сохранить</button>

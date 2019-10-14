@@ -1,10 +1,7 @@
 import {
   Component,
-  OnInit,
-  Input,
   OnChanges,
-  Output,
-  EventEmitter
+  OnInit,
 } from '@angular/core';
 import { IUser } from '../model/iuser';
 import { FirebaseServiceService } from '../services/firebase-service.service';
@@ -15,9 +12,9 @@ import { StreamsService } from '../services/streams.service';
   templateUrl: './user-settings.component.html',
   styleUrls: ['./user-settings.component.sass']
 })
-export class UserSettingsComponent implements OnInit {
+export class UserSettingsComponent implements OnInit, OnChanges {
   user: IUser;
-  updateUser: boolean = false;
+  updateUser = false;
 
   constructor(
     private fbs: FirebaseServiceService,
@@ -32,6 +29,11 @@ export class UserSettingsComponent implements OnInit {
         this.user.division = observer.division;
         this.user.sex = observer.sex;
         this.user.key = observer.key;
+        this.user.photo = observer.photo;
+        this.user.accesses.createDepos=observer.accesses.createDepos;
+        this.user.accesses.closeDepose=observer.accesses.closeDepose;
+        this.user.accesses.approveCred=observer.accesses.approveCred;
+        this.user.accesses.approveCount=observer.accesses.approveCount;
 
         this.updateUser = true;
       }
@@ -48,6 +50,17 @@ export class UserSettingsComponent implements OnInit {
     this.userReset();
   }
 
+  onPushPhoto(event:any){
+    const img = event.target.files[0];
+    const reader: FileReader = new FileReader();
+    reader.onload=()=>{
+      this.user.photo = reader.result
+      event.target.value =''
+    }
+    
+    reader.readAsDataURL(img);
+  }
+
   onReset() {
     if (this.updateUser) {
       this.updateUser = !this.updateUser;
@@ -62,7 +75,14 @@ export class UserSettingsComponent implements OnInit {
       secName: '',
       sex: '',
       position: '',
-      division: ''
+      division: '',
+      photo:'',
+      accesses:{
+        createDepos:false,
+        closeDepose:false,
+        approveCred:false,
+        approveCount:false,
+      }
     };
   }
 
@@ -70,10 +90,9 @@ export class UserSettingsComponent implements OnInit {
     if (!this.user) {
       this.userReset();
     }
-    console.log('hook');
   }
 
-  ngOnInit() {
+  ngOnInit(){
     this.userReset();
   }
 }
